@@ -22,26 +22,31 @@ public class StudentGradeDAO {
         this.jdbc = jdbc;
     }
 
-    public Student isValidUser(String name, String password) {
+    public JdbcTemplate getJdbc() {
+        return jdbc;
+    }
+
+    /*public Student isValidUser(String name, String password) {
 
         Student std = jdbc.queryForObject("select id,fullname from student where fullname = ?",
                 new studMapper(),name);
 
         return std;
-    }
+    }*/
 
-    public List<StudentCourses> getStudCourses(int id) {
+  //  public List<StudentCourses> getStudCourses(int id) {
+  public List<StudentCourses> getStudCourses(String username) {
 
         //String sql = "select studentCourses.studid,courses.coursename from studentCourses " +
         //        "inner join courses on studentCourses.courseid = courses.id and studentCourses.studid = ?";
 
         String sql = "select student.id,student.fullname,courses.coursename from courses " +
                         "inner join studentCourses on studentCourses.courseid = courses.id" +
-                        " inner join student on studentCourses.studid = student.id and student.id = ?";
+                        " inner join student on studentCourses.studid = student.id and student.fullname = ?";
 
         List<StudentCourses> stdCourses = jdbc.query(sql,new PreparedStatementSetter(){
            public void setValues(PreparedStatement preparedStatement) throws SQLException {
-               preparedStatement.setInt(1,id);
+               preparedStatement.setString(1,username);
            }},new studCoursesMapper());
 
         return stdCourses;

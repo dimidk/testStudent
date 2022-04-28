@@ -5,15 +5,18 @@ import app.model.StudentCourses;
 import app.model.StudentGradeDAO;
 import app.model.StudentGrades;
 import org.springframework.http.HttpStatus;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 
 @RestController
-@RequestMapping(path="/student")
+@Validated
+//@RequestMapping(path="/student")
 public class StudentController {
 
     private  StudentGradeDAO student;
@@ -28,19 +31,19 @@ public class StudentController {
 
         Student std = student.isValidUser(username,password);
         return std;
+    }*/
+    @RequestMapping(path="/")
+    public String isValidUser(){
+        return "User:Valid user logged in!";
     }
 
-    @GetMapping(path="/logout")
-    public void logout() {
-        //exit from Rest API
-
-    }*/
-
     //getAllCourses for user
-    @GetMapping(path="/{id}")
-    public List<StudentCourses> getAllCourses(@PathVariable int id){
+    //@GetMapping(path="/{id}")
+    @GetMapping(path="/{username}")
+    //public List<StudentCourses> getAllCourses(@PathVariable int id){
+    public List<StudentCourses> getAllCourses(@PathVariable String username){
 
-        return student.getStudCourses(id);
+        return student.getStudCourses(username);
     }
 
     //getAllGrades for user
