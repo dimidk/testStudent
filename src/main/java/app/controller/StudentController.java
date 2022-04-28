@@ -18,7 +18,6 @@ import java.util.List;
 
 @RestController
 @Validated
-//@RequestMapping(path="/student")
 public class StudentController {
 
     private  StudentGradeDAO student;
@@ -27,13 +26,6 @@ public class StudentController {
         this.student = student;
     }
 
-    //is Valid User and able to connect to database
-    /*@PostMapping(path="/login/{username}/{password}")
-    public Student isValidUser(@PathVariable String username,@PathVariable String password) {
-
-        Student std = student.isValidUser(username,password);
-        return std;
-    }*/
 
     protected String authName() {
 
@@ -50,11 +42,7 @@ public class StudentController {
         return "User:Valid user logged in!";
     }
 
-    //getAllCourses for user
-    //@GetMapping(path="/{id}")
     @GetMapping(path="/studcourse")
-    //public List<StudentCourses> getAllCourses(@PathVariable int id){
-    //public List<StudentCourses> getAllCourses(@PathVariable String username){
     public List<StudentCourses> getAllCourses(){
 
         return student.getStudCourses(authName());

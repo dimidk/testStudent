@@ -26,19 +26,8 @@ public class StudentGradeDAO {
         return jdbc;
     }
 
-    /*public Student isValidUser(String name, String password) {
 
-        Student std = jdbc.queryForObject("select id,fullname from student where fullname = ?",
-                new studMapper(),name);
-
-        return std;
-    }*/
-
-  //  public List<StudentCourses> getStudCourses(int id) {
   public List<StudentCourses> getStudCourses(String username) {
-
-        //String sql = "select studentCourses.studid,courses.coursename from studentCourses " +
-        //        "inner join courses on studentCourses.courseid = courses.id and studentCourses.studid = ?";
 
         String sql = "select student.id,student.fullname,courses.coursename from courses " +
                         "inner join studentCourses on studentCourses.courseid = courses.id" +
@@ -52,11 +41,8 @@ public class StudentGradeDAO {
         return stdCourses;
     }
 
-//    public List<StudentGrades> getStudGrades(int id) {
-    public List<StudentGrades> getStudGrades(String name) {
 
-    //    String sql = "select studentGrades.studid,courses.coursename,studentGrades.grade from studentGrades " +
-    //            "inner join courses on studentGrades.courseid = courses.id and studentGrades.studid = ?";
+    public List<StudentGrades> getStudGrades(String name) {
 
         String sql = "select student.id,student.fullname,courses.coursename, studentGrades.grade from courses " +
                 "inner join studentGrades on studentGrades.courseid = courses.id" +

@@ -39,10 +39,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configureGlobalSecurity(AuthenticationManagerBuilder auth) throws Exception {
 
         auth.jdbcAuthentication().dataSource(std.getJdbc().getDataSource());
-        //        .withUser("dimitra")
-        //        .password("dimitra")
-        //        .roles("USER");
-
     }
 
     @Override
