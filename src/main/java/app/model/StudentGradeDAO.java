@@ -52,18 +52,19 @@ public class StudentGradeDAO {
         return stdCourses;
     }
 
-    public List<StudentGrades> getStudGrades(int id) {
+//    public List<StudentGrades> getStudGrades(int id) {
+    public List<StudentGrades> getStudGrades(String name) {
 
     //    String sql = "select studentGrades.studid,courses.coursename,studentGrades.grade from studentGrades " +
     //            "inner join courses on studentGrades.courseid = courses.id and studentGrades.studid = ?";
 
         String sql = "select student.id,student.fullname,courses.coursename, studentGrades.grade from courses " +
                 "inner join studentGrades on studentGrades.courseid = courses.id" +
-                " inner join student on studentGrades.studid = student.id and student.id = ?";
+                " inner join student on studentGrades.studid = student.id and student.fullname = ?";
 
         List<StudentGrades> stdGrades = jdbc.query(sql,new PreparedStatementSetter(){
             public void setValues(PreparedStatement preparedStatement) throws SQLException {
-                preparedStatement.setInt(1,id);
+                preparedStatement.setString(1,name);
             }},new studGradesMapper());
 
         return stdGrades;
