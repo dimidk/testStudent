@@ -31,7 +31,7 @@ public class StudentGradeDAO {
 
         String sql = "select student.id,student.fullname,courses.coursename from courses " +
                         "inner join studentCourses on studentCourses.courseid = courses.id" +
-                        " inner join student on studentCourses.studid = student.id and student.fullname = ?";
+                        " inner join student on studentCourses.studid = student.id and student.username = ?";
 
         List<StudentCourses> stdCourses = jdbc.query(sql,new PreparedStatementSetter(){
            public void setValues(PreparedStatement preparedStatement) throws SQLException {
@@ -46,7 +46,7 @@ public class StudentGradeDAO {
 
         String sql = "select student.id,student.fullname,courses.coursename, studentGrades.grade from courses " +
                 "inner join studentGrades on studentGrades.courseid = courses.id" +
-                " inner join student on studentGrades.studid = student.id and student.fullname = ?";
+                " inner join student on studentGrades.studid = student.id and student.username = ?";
 
         List<StudentGrades> stdGrades = jdbc.query(sql,new PreparedStatementSetter(){
             public void setValues(PreparedStatement preparedStatement) throws SQLException {
@@ -76,6 +76,16 @@ public class StudentGradeDAO {
         float minGrade = jdbc.queryForObject("select min(grade) from studentGrades inner join courses on" +
                 " studentGrades.courseid = courses.id and courses.coursename = ?",Float.class,course);
         return minGrade;
+
+    }
+
+    public float getMedianCourse(String course) throws SQLException {
+
+        float medianGrade;
+        float max = getMaxCourse(course);
+        float min = getMinCourse(course);
+        medianGrade = (max + min) / 2;
+        return medianGrade;
 
     }
 

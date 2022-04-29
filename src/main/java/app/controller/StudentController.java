@@ -12,6 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -59,12 +60,13 @@ public class StudentController {
     }
 
     @GetMapping(path="/course/{course}")
-    public HashMap<String,Float> getClassGradeCourse(@PathVariable String course) {
+    public HashMap<String,Float> getClassGradeCourse(@PathVariable String course) throws SQLException {
 
         HashMap<String,Float> res = new HashMap<>();
         res.put("Average",student.getAvgCourse(course));
         res.put("Maximum",student.getMaxCourse(course));
         res.put("Minimum",student.getMinCourse(course));
+        res.put("Median",student.getMedianCourse(course));
 
         return res;
     }
